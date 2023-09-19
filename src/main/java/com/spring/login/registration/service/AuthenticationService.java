@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +26,7 @@ public class AuthenticationService {
     private AuthenticationManager authenticationManager;
 
 
-
-    public AuthenticationResponse register(RegisterRequest request) {
+    public TokenResponse register(RegisterRequest request) {
         //We set the values from userDetails with our entity values in DB
         var user = UserEntity.builder()
                 .name(request.getFirstname())
@@ -36,17 +34,18 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .roles(EnumRole.USER)
+                .location(request.getLocation())
                 .build();
         //We save the user in DB
         userRepository.save(user);
         //We generate the token for this user
         var token = jwtService.generateToken(user);
         //return the token
-        return AuthenticationResponse.builder()
+        return TokenResponse.builder()
                 .token(token).build();
     }
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+    public TokenResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
@@ -58,7 +57,7 @@ public class AuthenticationService {
         //We generate the token for this user
         var token = jwtService.generateToken(user);
         //return the token
-        return AuthenticationResponse.builder()
+        return TokenResponse.builder()
                 .token(token).build();
     }
 }

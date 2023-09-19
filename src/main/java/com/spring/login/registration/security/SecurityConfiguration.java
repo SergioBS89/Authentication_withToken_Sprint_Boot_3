@@ -1,7 +1,6 @@
 package com.spring.login.registration.security;
 
 import com.spring.login.registration.security.filter.JwtAuthFilter;
-import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -46,5 +45,4 @@ public class SecurityConfiguration {
 
         return http.build();
     }
-
 }

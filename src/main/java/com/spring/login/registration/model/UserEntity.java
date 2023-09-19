@@ -4,7 +4,6 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.Collection;
 import java.util.List;
 
@@ -24,6 +23,7 @@ public class UserEntity implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private EnumRole roles;
+    private String location;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -31,12 +31,12 @@ public class UserEntity implements UserDetails {
     }
 
     @Override
-    public String getUsername(){
+    public String getUsername() {
         return email;
     }
 
     @Override
-    public String getPassword(){
+    public String getPassword() {
         return password;
     }
 

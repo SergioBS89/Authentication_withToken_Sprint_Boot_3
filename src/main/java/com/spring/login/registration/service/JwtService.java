@@ -26,7 +26,7 @@ public class JwtService {
     }
 
     //Extracts one single claim
-    public <T> T extractClaim(final String token, final Function<Claims, T> claimsResolver){
+    public <T> T extractClaim(final String token, final Function<Claims, T> claimsResolver) {
         Claims claims = this.extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
@@ -34,13 +34,13 @@ public class JwtService {
     /**
      * Generator of tokens using Claims
      */
-    public String generateToken(final Map<String, Object> listOfClaims, final UserDetails userDetails){
+    public String generateToken(final Map<String, Object> listOfClaims, final UserDetails userDetails) {
         return Jwts
                 .builder()
                 .setClaims(listOfClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 *60 * 24))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
                 .signWith(this.getSignKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -48,30 +48,30 @@ public class JwtService {
     /**
      * Generator of clients without Claims
      */
-    public String generateToken(final UserDetails userDetails){
+    public String generateToken(final UserDetails userDetails) {
         return this.generateToken(new HashMap<>(), userDetails);
     }
 
     /**
      * Token validators
      */
-    public boolean isTokenValid(final String token, final UserDetails userDetails){
+    public boolean isTokenValid(final String token, final UserDetails userDetails) {
         String username = this.extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !this.isTokenExpired(token));
     }
 
-    private boolean isTokenExpired(final String token){
+    private boolean isTokenExpired(final String token) {
         return this.extractExpiration(token).before(new Date());
     }
 
-    private Date extractExpiration(final String token){
+    private Date extractExpiration(final String token) {
         return this.extractClaim(token, Claims::getExpiration);
     }
 
     /**
      * This function use the interface Claims to extract info from a JWTS Token
      */
-    private Claims extractAllClaims(final String token){
+    private Claims extractAllClaims(final String token) {
         return Jwts
                 .parserBuilder()
                 .setSigningKey(this.getSignKey())
@@ -83,7 +83,7 @@ public class JwtService {
     /**
      * Key decoder
      */
-    private Key getSignKey(){
+    private Key getSignKey() {
         byte[] keyBytes = Decoders.BASE64.decode(JwtService.SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
     }

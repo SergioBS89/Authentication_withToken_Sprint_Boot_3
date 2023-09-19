@@ -2,7 +2,6 @@ package com.spring.login.registration.controller;
 
 import com.spring.login.registration.model.UserEntity;
 import com.spring.login.registration.service.UserEntityService;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,14 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/demo")
+@RequestMapping("api/v1/proof")
 public class DemoController {
 
     @Autowired
     private UserEntityService userEntityService;
 
     /**
-     * Once we have gotten the token, we can test it in Postman, tab authentication (Bearer token)
+     * Once we obtain the token, we can test both Get request are below using Postman, tab authentication (Bearer token: paste the token generated)
      */
     @GetMapping
     public ResponseEntity<String> sayHello(){

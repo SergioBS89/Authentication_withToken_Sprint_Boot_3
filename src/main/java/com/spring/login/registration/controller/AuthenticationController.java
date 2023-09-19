@@ -1,8 +1,8 @@
 package com.spring.login.registration.controller;
 
 import com.spring.login.registration.model.AuthenticationRequest;
-import com.spring.login.registration.model.AuthenticationResponse;
 import com.spring.login.registration.model.RegisterRequest;
+import com.spring.login.registration.model.TokenResponse;
 import com.spring.login.registration.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +20,26 @@ public class AuthenticationController {
     @Autowired
     private AuthenticationService authenticationService;
 
+    /*    { TO TEST REGISTER IN DB
+        "firstname": "Sergio",
+            "lastname": "Berdiell",
+            "email": "sergio@gmail.com",
+            "password": "1234",
+            "location": "Binefar"
+    }*/
+
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<TokenResponse> register(@RequestBody RegisterRequest request) {
         return ResponseEntity.ok(authenticationService.register(request));
     }
 
-    @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
+/*    { TO TEST AUTHENTICATION
+        "email":"sergio@gmail.com",
+            "password":"1234"
+    }*/
+
+    @PostMapping("/authentication")
+    public ResponseEntity<TokenResponse> authenticate(@RequestBody AuthenticationRequest request) {
         return ResponseEntity.ok(authenticationService.authenticate(request));
     }
 }
