@@ -1,9 +1,0 @@
-spring:
-    datasource:
-        password: batman
-        url: jdbc:mysql://localhost:3306/complete_login
-        username: root
-    jpa:
-        hibernate:
-            ddl-auto: create
-        show-sql: true
