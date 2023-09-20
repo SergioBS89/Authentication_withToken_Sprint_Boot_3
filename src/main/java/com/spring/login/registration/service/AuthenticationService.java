@@ -25,7 +25,11 @@ public class AuthenticationService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-
+    /**
+     * This method takes the data provided in a RegisterRequest, creates a new user in the database, generates a JWT token for the user,
+     * and returns that token in a response encapsulated in a TokenResponse instance.
+     * This process is typically used in creating user accounts and generating JWT tokens to allow authenticated users to access protected resources in the application.
+     */
     public TokenResponse register(RegisterRequest request) {
         //We set the values from userDetails with our entity values in DB
         var user = UserEntity.builder()
@@ -45,6 +49,11 @@ public class AuthenticationService {
                 .token(token).build();
     }
 
+    /**
+     * This method takes an email and password provided in an authentication request (AuthenticationRequest), authenticates the user using the authenticationManager,
+     * generates a JWT token for the authenticated user and returns that token in a response encapsulated in an instance of TokenResponse.
+     * This process is used to allow authenticated users to access protected resources in the application.
+     */
     public TokenResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(

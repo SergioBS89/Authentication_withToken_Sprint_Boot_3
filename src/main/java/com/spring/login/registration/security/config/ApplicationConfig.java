@@ -30,6 +30,10 @@ public class ApplicationConfig {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
+    /**
+     * This code configures a DaoAuthenticationProvider authentication provider in a Spring application, providing it with a UserDetailsService implementation
+     * and a password encoder. This provider is used to authenticate users in the application when an authentication request is done.
+     */
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
@@ -38,11 +42,19 @@ public class ApplicationConfig {
         return authenticationProvider;
     }
 
+    /**
+     * This configuration is useful when you need to inject an AuthenticationManager into other parts of the application,
+     * such as controllers or security filters, to perform user authentication.
+     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
 
+    /**
+     * this code configures a bean called passwordEncoder that provides an instance of BCryptPasswordEncoder as an implementation
+     * of PasswordEncoder for secure password management in a Spring application.
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

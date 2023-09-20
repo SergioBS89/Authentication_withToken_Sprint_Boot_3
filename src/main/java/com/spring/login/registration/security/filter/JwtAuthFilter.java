@@ -27,6 +27,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    /**
+     * This security filter verify the incoming requests that contains a JWT Token in the authorization header and authenticate the user if the token is valid.
+     */
     @Override
     protected void doFilterInternal(
             @NonNull HttpServletRequest request,

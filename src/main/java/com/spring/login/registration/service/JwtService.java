@@ -19,20 +19,27 @@ public class JwtService {
     private static final String SECRET_KEY = "bde6a99c011265fb10894ec36d5c55b4970c5ebfdcdcfdc89ef48f583b952d88";
 
     /**
-     * Function to get the username from the token
+     * Function to extract the username from the token
      */
     public String extractUsername(final String jwt) {
         return this.extractClaim(jwt, Claims::getSubject);
     }
 
-    //Extracts one single claim
+    /**
+     * This method is used to extract a specific claim from a JWT token. It takes a token and a function (claimsResolver) that is used to obtain the desired claim.
+     * The function is applied to the claims contained in the token, and the result is returned in the specified type <T>.
+     * @param token
+     * @param claimsResolver
+     * @param <T> Generic value
+     * @return
+     */
     public <T> T extractClaim(final String token, final Function<Claims, T> claimsResolver) {
         Claims claims = this.extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
 
     /**
-     * Generator of tokens using Claims
+     * Generate a JWT token with a custom set of claims provided in listOfClaims and with user information provided in userDetails.
      */
     public String generateToken(final Map<String, Object> listOfClaims, final UserDetails userDetails) {
         return Jwts
@@ -46,14 +53,14 @@ public class JwtService {
     }
 
     /**
-     * Generator of clients without Claims
+     * Generate a JWT token without custom claims, using only the user details provided in userDetails.
      */
     public String generateToken(final UserDetails userDetails) {
         return this.generateToken(new HashMap<>(), userDetails);
     }
 
     /**
-     * Token validators
+     * This method is used to validate if a JWT token is valid. It checks if the user on the token matches the user details provided and if the token has expired.
      */
     public boolean isTokenValid(final String token, final UserDetails userDetails) {
         String username = this.extractUsername(token);
@@ -69,7 +76,7 @@ public class JwtService {
     }
 
     /**
-     * This function use the interface Claims to extract info from a JWTS Token
+     * This function is used to extract all the claims from JWTS Token
      */
     private Claims extractAllClaims(final String token) {
         return Jwts
@@ -81,7 +88,7 @@ public class JwtService {
     }
 
     /**
-     * Key decoder
+     * This method is used to obtain a signing key from a SECRET_KEY in Base64 format.
      */
     private Key getSignKey() {
         byte[] keyBytes = Decoders.BASE64.decode(JwtService.SECRET_KEY);

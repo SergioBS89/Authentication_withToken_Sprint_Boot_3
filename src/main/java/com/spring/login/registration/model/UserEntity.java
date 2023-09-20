@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Builder //It helps us to build objects
+@Builder //This Lombok annotation generates a builder-style constructor that allows you to build instances of the class more easily using the Builder pattern.
 @Table(name = "users")
 public class UserEntity implements UserDetails {
     @Id

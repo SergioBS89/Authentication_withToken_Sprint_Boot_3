@@ -24,7 +24,10 @@ public class SecurityConfiguration {
     @Autowired
     private AuthenticationProvider authenticationProvider;
 
-    //Bean to manage the filter chain (all http request)
+    /**
+     * this code configures security in a Spring application by setting authorization and authentication rules for HTTP requests,
+     * disabling CSRF and setting session handling to "stateless". It also adds a custom filter to manage authentication based on JWT tokens.
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -41,7 +44,6 @@ public class SecurityConfiguration {
                 .and()
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-
 
         return http.build();
     }
